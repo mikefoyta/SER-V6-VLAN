@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CompTIA Server+ (SK1-006) — VLAN Domain Switchboard</title>
   <style>
-    
 :root {
   --bg-primary: #0b0f17;
   --bg-secondary: #131a26;
@@ -83,6 +82,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .nav-btn {
@@ -106,9 +106,16 @@ body {
   color: var(--accent-cyan);
 }
 
-.nav-btn.disabled {
-  opacity: 0.38;
-  pointer-events: none;
+.nav-btn.admin-accent {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.45);
+  color: #e9d5ff;
+}
+
+.nav-btn.admin-accent:hover {
+  background: rgba(168, 85, 247, 0.28);
+  border-color: var(--accent-purple);
+  color: #ffffff;
 }
 
 .container {
@@ -124,6 +131,12 @@ body {
   border-radius: 10px;
   padding: 1.4rem 1.6rem;
   margin-bottom: 1.75rem;
+}
+
+.vlan-banner.admin-banner {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.16), rgba(56, 189, 248, 0.1));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-left: 4px solid var(--accent-purple);
 }
 
 .vlan-tag-row {
@@ -145,6 +158,11 @@ body {
   background: rgba(56, 189, 248, 0.14);
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
+}
+
+.vlan-pill.admin-pill {
+  color: #e9d5ff;
+  background: rgba(168, 85, 247, 0.22);
 }
 
 .isolation-pill {
@@ -169,74 +187,97 @@ h1 {
   font-size: 0.96rem;
 }
 
-.grid-2 {
+.switch-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 1.15rem;
-  margin-bottom: 1.5rem;
-}
-
-.card {
+.port-card {
+  display: block;
+  text-decoration: none;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 1.25rem 1.35rem;
+  padding: 1.15rem 1.25rem;
+  transition: all 0.16s ease;
 }
 
-.card h2 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  margin-bottom: 0.75rem;
+.port-card.active:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.port-card.admin-card {
+  background: linear-gradient(145deg, #1d1832, #182132);
+  border: 1px solid rgba(168, 85, 247, 0.55);
+  grid-column: 1 / -1;
+}
+
+.port-card.admin-card:hover {
+  background: linear-gradient(145deg, #261f42, #1e293e);
+  border-color: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.22);
+}
+
+.port-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.45rem;
+  margin-bottom: 0.5rem;
 }
 
-.card h3 {
-  font-size: 0.94rem;
+.port-id {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-primary);
-  margin: 0.85rem 0 0.35rem;
-}
-
-.card p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 0.6rem;
-}
-
-ul.clean-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-ul.clean-list li {
-  position: relative;
-  padding-left: 1.15rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-ul.clean-list li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
   color: var(--accent-cyan);
-  font-weight: bold;
+  background: rgba(56, 189, 248, 0.14);
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
 }
 
-ul.clean-list li strong {
+.port-id.admin-id {
+  color: #e9d5ff;
+  background: rgba(168, 85, 247, 0.25);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+}
+
+.port-status {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-emerald);
+}
+
+.port-card h3 {
   color: var(--text-primary);
+  font-size: 1.02rem;
+  margin-bottom: 0.35rem;
+}
+
+.port-card p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
 }
 
 code {
@@ -249,135 +290,75 @@ code {
   border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
-.table-wrap {
-  overflow-x: auto;
-  margin-bottom: 1.5rem;
+.pdf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.action-btn.primary {
+  background: var(--accent-purple);
+  color: #ffffff;
+}
+
+.action-btn.primary:hover {
+  background: #9333ea;
+}
+
+.action-btn.secondary {
+  background: var(--bg-card);
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-color);
+}
+
+.action-btn.secondary:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-card-hover);
+}
+
+.pdf-frame-wrap {
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  background: var(--bg-card);
+  overflow: hidden;
+  height: 78vh;
+  min-height: 520px;
 }
 
-table {
+.pdf-frame-wrap iframe {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-  text-align: left;
+  height: 100%;
+  border: none;
 }
 
-th {
-  background: #101724;
-  color: var(--accent-cyan);
-  font-weight: 700;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid var(--border-color);
-  white-space: nowrap;
-}
-
-td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(42, 55, 80, 0.6);
-  color: var(--text-secondary);
-  vertical-align: top;
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-
-td strong {
-  color: var(--text-primary);
-}
-
-.callout {
+.mobile-note {
   background: rgba(245, 158, 11, 0.09);
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-left: 4px solid var(--accent-amber);
   border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  padding: 0.85rem 1.1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.86rem;
   color: var(--text-secondary);
 }
 
-.callout strong {
+.mobile-note strong {
   color: var(--accent-amber);
 }
-
-.footer-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border-color);
-}
-
-    .switch-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1rem;
-      margin-top: 1.25rem;
-    }
-    .port-card {
-      display: block;
-      text-decoration: none;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.15rem 1.25rem;
-      transition: all 0.16s ease;
-    }
-    .port-card.active:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent-cyan);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-    }
-    .port-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .port-id {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.14);
-      padding: 0.18rem 0.55rem;
-      border-radius: 4px;
-    }
-    .port-status {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--accent-emerald);
-    }
-    .port-card h3 {
-      color: var(--text-primary);
-      font-size: 1.02rem;
-      margin-bottom: 0.35rem;
-    }
-    .port-card p {
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      line-height: 1.45;
-    }
-    .legend-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.85rem 1.15rem;
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-    }
-  </style>
+</style>
 </head>
 <body>
   <header class="topbar">
@@ -387,6 +368,7 @@ td strong {
         <span>COMPTIA SERVER+ // VLAN DOMAIN SWITCHBOARD</span>
       </a>
       <nav class="nav-links">
+        <a href="vlan-admin.html" class="nav-btn admin-accent">★ Master Admin VLAN</a>
         <a href="vlan-01.html" class="nav-btn">Start at VLAN 01 →</a>
       </nav>
     </div>
@@ -396,19 +378,28 @@ td strong {
     <section class="vlan-banner">
       <div class="vlan-tag-row">
         <span class="vlan-pill">TRUNK PORT // 802.1Q STUDY ARCHITECTURE</span>
-        <span class="isolation-pill">ALL 15 VLAN PORTS ONLINE</span>
+        <span class="isolation-pill">15 ISOLATED VLANS + MASTER ADMIN TRUNK</span>
       </div>
       <h1>CompTIA Server+ Isolated VLAN Study Hub</h1>
-      <p class="subtitle">Select any VLAN port below to enter that strictly isolated technical room. Cross-domain distractors are dropped at the switch.</p>
+      <p class="subtitle">Select the Master Admin VLAN for the complete 205-page reference guide, or enter any isolated VLAN 01–15 port below to eliminate cross-domain distractors.</p>
     </section>
 
     <div class="legend-bar">
-      <span><strong>Switch Status:</strong> 15 / 15 VLAN Domains Active (<code>LINK UP</code>)</span>
+      <span><strong>Switch Status:</strong> 15 / 15 Isolated VLANs + Master Admin Trunk (<code>LINK UP</code>)</span>
       <span><strong>Isolation Policy:</strong> Strict Domain Separation — Zero Cross-VLAN Leakage</span>
     </div>
 
     <div class="switch-grid">
       
+    <a href="vlan-admin.html" class="port-card admin-card">
+      <div class="port-header">
+        <span class="port-id admin-id">VLAN 99 // MASTER ADMIN TRUNK</span>
+        <span class="port-status online">● ALL DOMAINS AGGREGATED</span>
+      </div>
+      <h3>Master Server+ Study Guide (205-Page Complete Reference PDF)</h3>
+      <p>Full soup-to-nuts CompTIA Server+ master manual combining all 15 technical domains into one searchable, downloadable reference volume.</p>
+    </a>
+
     <a href="vlan-01.html" class="port-card active">
       <div class="port-header">
         <span class="port-id">VLAN 01</span>
