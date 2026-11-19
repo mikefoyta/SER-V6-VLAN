@@ -1,541 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CompTIA Server+ (SK1-006) — VLAN Domain Switchboard</title>
-  <style>
-:root {
-  --bg-primary: #0b0f17;
-  --bg-secondary: #131a26;
-  --bg-card: #182132;
-  --bg-card-hover: #1e293e;
-  --border-color: #2a3750;
-  --accent-cyan: #38bdf8;
-  --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-rose: #f43f5e;
-  --accent-purple: #a855f7;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompTIA Server+ V6 (SK1-006) — Master Study Hub</title>
+<style>
+  :root {
+    --bg-main: #0a0f1c;
+    --bg-card: #111827;
+    --bg-panel: #0d1526;
+    --border-subtle: #1e293b;
+    --accent-cyan: #38bdf8;
+    --accent-teal: #2dd4bf;
+    --accent-amber: #fbbf24;
+    --accent-red: #f87171;
+    --accent-purple: #c084fc;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    line-height: 1.6;
+    padding: 16px 12px 64px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 20px 18px;
+    margin-bottom: 18px;
+  }
+  header h1 { font-size: 1.35rem; color: var(--accent-cyan); margin-bottom: 6px; }
+  header p { font-size: 0.9rem; color: var(--text-secondary); }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  .card h2 {
+    font-size: 1.08rem;
+    color: var(--accent-teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .badge {
+    font-size: 0.72rem;
+    background: rgba(56, 189, 248, 0.14);
+    color: var(--accent-cyan);
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  p { margin-bottom: 10px; color: var(--text-secondary); font-size: 0.92rem; }
+  strong { color: var(--text-primary); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.85rem;
+  }
+  th, td {
+    border: 1px solid #1e293b;
+    padding: 9px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #0f172a;
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+  tr:nth-child(even) td { background: rgba(15, 23, 42, 0.5); }
+  .callout {
+    background: var(--bg-panel);
+    border-left: 3px solid var(--accent-amber);
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 0.87rem;
+    color: #fef3c7;
+  }
+  .callout.teal {
+    border-left-color: var(--accent-teal);
+    color: #ccfbf1;
+  }
+  .callout.red {
+    border-left-color: var(--accent-red);
+    color: #fee2e2;
+  }
+  pre {
+    background: #070b14;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+    color: #7dd3fc;
+    margin: 10px 0;
+  }
+  code {
+    background: #1e293b;
+    color: #7dd3fc;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.84rem;
+  }
+  ul { padding-left: 18px; margin-bottom: 10px; color: var(--text-secondary); font-size: 0.9rem; }
+  li { margin-bottom: 6px; }
+  .sim-box {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
+  }
+  .sim-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  select, input[type=number] {
+    background: #1e293b;
+    color: var(--text-primary);
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.88rem;
+  }
+  button.btn {
+    background: var(--accent-cyan);
+    color: #090d16;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  button.btn.danger { background: var(--accent-red); color: #fff; }
+  button.btn.reset { background: #334155; color: var(--text-primary); }
+  .locker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .locker {
+    background: #1e293b;
+    border: 2px solid var(--accent-teal);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.15s;
+  }
+  .locker.dead {
+    background: rgba(248, 113, 113, 0.18);
+    border-color: var(--accent-red);
+    color: #fca5a5;
+    text-decoration: line-through;
+  }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  padding-bottom: 4rem;
-}
-
-.topbar {
-  background: rgba(19, 26, 38, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 0.85rem 1.5rem;
-}
-
-.topbar-inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
-}
-
-.brand-badge {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-cyan);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--text-primary);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  transition: all 0.15s ease;
-}
-
-.nav-btn:hover:not(.disabled) {
-  background: var(--bg-card-hover);
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-}
-
-.nav-btn.admin-accent {
-  background: rgba(168, 85, 247, 0.15);
-  border-color: rgba(168, 85, 247, 0.45);
-  color: #e9d5ff;
-}
-
-.nav-btn.admin-accent:hover {
-  background: rgba(168, 85, 247, 0.28);
-  border-color: var(--accent-purple);
-  color: #ffffff;
-}
-
-.container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 1.75rem 1.5rem 0;
-}
-
-.vlan-banner {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(16, 185, 129, 0.08));
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-left: 4px solid var(--accent-cyan);
-  border-radius: 10px;
-  padding: 1.4rem 1.6rem;
-  margin-bottom: 1.75rem;
-}
-
-.vlan-banner.admin-banner {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.16), rgba(56, 189, 248, 0.1));
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  border-left: 4px solid var(--accent-purple);
-}
-
-.vlan-tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.45rem;
-}
-
-.vlan-pill {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.14);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-}
-
-.vlan-pill.admin-pill {
-  color: #e9d5ff;
-  background: rgba(168, 85, 247, 0.22);
-}
-
-.isolation-pill {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--accent-emerald);
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-}
-
-h1 {
-  font-size: 1.7rem;
-  font-weight: 800;
-  letter-spacing: -0.015em;
-  margin-bottom: 0.4rem;
-}
-
-.subtitle {
-  color: var(--text-secondary);
-  font-size: 0.96rem;
-}
-
-.switch-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1rem;
-  margin-top: 1.25rem;
-}
-
-.port-card {
-  display: block;
-  text-decoration: none;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 1.15rem 1.25rem;
-  transition: all 0.16s ease;
-}
-
-.port-card.active:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--accent-cyan);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.port-card.admin-card {
-  background: linear-gradient(145deg, #1d1832, #182132);
-  border: 1px solid rgba(168, 85, 247, 0.55);
-  grid-column: 1 / -1;
-}
-
-.port-card.admin-card:hover {
-  background: linear-gradient(145deg, #261f42, #1e293e);
-  border-color: var(--accent-purple);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.22);
-}
-
-.port-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.port-id {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.14);
-  padding: 0.18rem 0.55rem;
-  border-radius: 4px;
-}
-
-.port-id.admin-id {
-  color: #e9d5ff;
-  background: rgba(168, 85, 247, 0.25);
-  border: 1px solid rgba(168, 85, 247, 0.45);
-}
-
-.port-status {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--accent-emerald);
-}
-
-.port-card h3 {
-  color: var(--text-primary);
-  font-size: 1.02rem;
-  margin-bottom: 0.35rem;
-}
-
-.port-card p {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-
-.legend-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 0.85rem 1.15rem;
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-}
-
-code {
-  font-family: var(--font-mono);
-  font-size: 0.83rem;
-  background: rgba(15, 23, 42, 0.85);
-  color: var(--accent-amber);
-  padding: 0.12rem 0.38rem;
-  border-radius: 4px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-}
-
-.pdf-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.65rem 1.1rem;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.15s ease;
-}
-
-.action-btn.primary {
-  background: var(--accent-purple);
-  color: #ffffff;
-}
-
-.action-btn.primary:hover {
-  background: #9333ea;
-}
-
-.action-btn.secondary {
-  background: var(--bg-card);
-  color: var(--accent-cyan);
-  border: 1px solid var(--border-color);
-}
-
-.action-btn.secondary:hover {
-  border-color: var(--accent-cyan);
-  background: var(--bg-card-hover);
-}
-
-.pdf-frame-wrap {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  overflow: hidden;
-  height: 78vh;
-  min-height: 520px;
-}
-
-.pdf-frame-wrap iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.mobile-note {
-  background: rgba(245, 158, 11, 0.09);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-left: 4px solid var(--accent-amber);
-  border-radius: 8px;
-  padding: 0.85rem 1.1rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-}
-
-.mobile-note strong {
-  color: var(--accent-amber);
-}
+  .hub-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+  a.hub-link {
+    display: block;
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 16px;
+    text-decoration: none;
+    color: #f1f5f9;
+    transition: 0.15s;
+  }
+  a.hub-link:hover { border-color: #38bdf8; background: #162033; }
+  a.hub-link h3 { color: #38bdf8; font-size: 1.05rem; margin-bottom: 4px; }
+  a.hub-link span { color: #94a3b8; font-size: 0.85rem; }
 </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="index.html" class="brand">
-        <span class="brand-badge">SK1-006</span>
-        <span>COMPTIA SERVER+ // VLAN DOMAIN SWITCHBOARD</span>
-      </a>
-      <nav class="nav-links">
-        <a href="vlan-admin.html" class="nav-btn admin-accent">★ Master Admin VLAN</a>
-        <a href="vlan-01.html" class="nav-btn">Start at VLAN 01 →</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="vlan-banner">
-      <div class="vlan-tag-row">
-        <span class="vlan-pill">TRUNK PORT // 802.1Q STUDY ARCHITECTURE</span>
-        <span class="isolation-pill">15 ISOLATED VLANS + MASTER ADMIN TRUNK</span>
-      </div>
-      <h1>CompTIA Server+ Isolated VLAN Study Hub</h1>
-      <p class="subtitle">Select the Master Admin VLAN for the complete 205-page reference guide, or enter any isolated VLAN 01–15 port below to eliminate cross-domain distractors.</p>
-    </section>
-
-    <div class="legend-bar">
-      <span><strong>Switch Status:</strong> 15 / 15 Isolated VLANs + Master Admin Trunk (<code>LINK UP</code>)</span>
-      <span><strong>Isolation Policy:</strong> Strict Domain Separation — Zero Cross-VLAN Leakage</span>
-    </div>
-
-    <div class="switch-grid">
-      
-    <a href="vlan-admin.html" class="port-card admin-card">
-      <div class="port-header">
-        <span class="port-id admin-id">VLAN 99 // MASTER ADMIN TRUNK</span>
-        <span class="port-status online">● ALL DOMAINS AGGREGATED</span>
-      </div>
-      <h3>Master Server+ Study Guide (205-Page Complete Reference PDF)</h3>
-      <p>Full soup-to-nuts CompTIA Server+ master manual combining all 15 technical domains into one searchable, downloadable reference volume.</p>
-    </a>
-
-    <a href="vlan-01.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 01</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Storage Area Network (SAN)</h3>
-      <p>Block storage, Fibre Channel, FCoE, iSCSI, NVMe-oF, WWNs, Zoning, MPIO</p>
-    </a>
-    
-    <a href="vlan-02.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 02</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Network Attached Storage (NAS)</h3>
-      <p>File storage, SMB/CIFS (445), NFS (2049), AFP (548), ZFS, Share/NTFS ACLs</p>
-    </a>
-    
-    <a href="vlan-03.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 03</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>RAID Levels & Fault Tolerance</h3>
-      <p>RAID 0/1/5/6/10, capacity math, write penalties, BBU/FBWC, Hot Spares, UREs</p>
-    </a>
-    
-    <a href="vlan-04.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 04</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>HA, Fault Tolerance & Clustering</h3>
-      <p>HA vs. FT lockstep, Active/Passive, Heartbeats, Quorum, STONITH, Load Balancers</p>
-    </a>
-    
-    <a href="vlan-05.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 05</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Server Hardware, Buses & Interfaces</h3>
-      <p>SAS vs. SATA vs. NVMe, PCIe lanes/gens, ECC/RDIMM/LRDIMM, NUMA, Rack/Blade</p>
-    </a>
-    
-    <a href="vlan-06.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 06</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Out-of-Band Management (BMC)</h3>
-      <p>BMC, IPMI (623), Redfish, iDRAC, iLO, Virtual KVM/Media, Serial-over-LAN</p>
-    </a>
-    
-    <a href="vlan-07.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 07</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Backup, Recovery & Disaster Recovery</h3>
-      <p>Full/Inc/Diff/Synthetic, Archive bit, 3-2-1-1-0, GFS, RPO/RTO, Cold/Warm/Hot sites</p>
-    </a>
-    
-    <a href="vlan-08.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 08</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Server Security & Hardening</h3>
-      <p>TPM 2.0, Secure Boot, HSM, SEDs, CIS/STIG, SELinux, Kerberos, Physical Controls</p>
-    </a>
-    
-    <a href="vlan-09.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 09</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Power, Cooling & Environmental</h3>
-      <p>Online/Line-Interactive UPS, ATS, Metered/Switched PDUs, Hot/Cold Aisle, ASHRAE</p>
-    </a>
-    
-    <a href="vlan-10.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 10</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Networking Services & Troubleshooting</h3>
-      <p>DNS, DHCP, NTP, SNMP, Syslog, 802.1Q, LACP, Jumbo Frames, ping/dig/ss/tcpdump</p>
-    </a>
-    
-    <a href="vlan-11.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 11</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Virtualization, Hypervisors & Containers</h3>
-      <p>Type 1 vs. Type 2, vSwitch, Thin/Thick, Snapshots, Ballooning, Docker & K8s</p>
-    </a>
-    
-    <a href="vlan-12.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 12</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>OS Deployment, Scripting & Licensing</h3>
-      <p>PXE, WDS, Kickstart, cloud-init, UEFI/GPT vs. BIOS/MBR, LVM, PowerShell/Bash</p>
-    </a>
-    
-    <a href="vlan-13.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 13</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Hardware, Storage & OS Troubleshooting</h3>
-      <p>7-Step Methodology, POST/LEDs, Thermal/ECC faults, BCD/GRUB2, fsck/chkdsk, iostat</p>
-    </a>
-    
-    <a href="vlan-14.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 14</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Asset Lifecycle, Docs & Compliance</h3>
-      <p>Procurement to Decommission, CAB Change Control, CMDB, SOPs, NIST 800-88 Sanitization</p>
-    </a>
-    
-    <a href="vlan-15.html" class="port-card active">
-      <div class="port-header">
-        <span class="port-id">VLAN 15</span>
-        <span class="port-status online">● LINK UP</span>
-      </div>
-      <h3>Physical Server Room, Racks & Power Math</h3>
-      <p>W = V × A, 80% rule, 50% A/B PDU limit, VA vs. Watts, 4-Post Racks, Crash Cart & KVM</p>
-    </a>
-    
-    </div>
-  </main>
+<header>
+  <h1>CompTIA Server+ V6 (SK1-006) — Complete Mobile Study Hub</h1>
+  <p>7 Self-Contained Dark-Navy Interactive Modules • 200 V6 Scenarios (All 5 Domains + AI) &amp; 5 Interactive Technical Master Vaults.</p>
+</header>
+<div class="hub-grid">
+  <a class="hub-link" href="01-scenarios-set1.html"><h3>01. 100 Scenarios Vault — Set 1 (#001–#100)</h3><span>All 5 V6 Domains (Hardware, Admin/Storage, Security/DR, Troubleshooting, AI Compute) with root-cause drawers.</span></a>
+  <a class="hub-link" href="02-scenarios-set2.html"><h3>02. 100 Scenarios Vault — Set 2 (#101–#200)</h3><span>100 brand-new scenarios: Blade chassis, ZFS, WSFC quorum, PAWs, LoRA, KV cache &amp; liquid cooling.</span></a>
+  <a class="hub-link" href="03-raid-storage-master.html"><h3>03. RAID &amp; Enterprise Storage Master</h3><span>Interactive RAID 10 Vertical Locker Simulator, Usable Capacity Calculator, Write Penalties &amp; BBU mechanics.</span></a>
+  <a class="hub-link" href="04-coding-cli-master.html"><h3>04. Linux/Windows CLI, Scripting &amp; Automation Master</h3><span>Socket diagnostics (ss/netstat), LVM/inode commands, OOM Killer, systemd auto-restart, crontab &amp; Ansible.</span></a>
+  <a class="hub-link" href="05-power-cooling-master.html"><h3>05. Rack Power, Redundancy &amp; Cooling Master</h3><span>Interactive A/B Feed &amp; 80% NEC Circuit Calculator, Cold Redundancy, UPS/Generator slew, PUE &amp; D2C liquid cooling.</span></a>
+  <a class="hub-link" href="06-hardware-architecture-master.html"><h3>06. Server Hardware Architecture Master</h3><span>CPU Cache L1/L2/L3, NUMA node affinity, 8-channel DIMM interleaving, 2DPC physics, PCIe bifurcation &amp; BMC.</span></a>
+  <a class="hub-link" href="07-components-diagnostics-master.html"><h3>07. Components, Interfaces &amp; Diagnostics Master</h3><span>UDIMM/RDIMM/LRDIMM, SAS/U.3/EDSFF, OCP 3.0, UPC vs. APC fiber ends, TPM 2.0 &amp; WHEA/SEL log triggers.</span></a>
+</div>
 </body>
 </html>
